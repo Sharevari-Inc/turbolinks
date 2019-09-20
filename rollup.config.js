@@ -1,6 +1,8 @@
 import typescript from "rollup-plugin-typescript2"
+import { terser } from "rollup-plugin-terser"
 import { version } from "./package.json"
 const year = new Date().getFullYear()
+const isProduction = process.env.BUILD === 'production'
 
 const options = {
   plugins: [
@@ -10,6 +12,11 @@ const options = {
         compilerOptions: {
           removeComments: true
         }
+      }
+    }),
+    terser({
+      output: {
+        preamble: `/*\nTurbolinks ${version}\nCopyright © ${year} Basecamp, LLC\n */`
       }
     })
   ],
@@ -22,11 +29,10 @@ export default [
   {
     input: "src/index.ts",
     output: {
-      banner: `/*\nTurbolinks ${version}\nCopyright © ${year} Basecamp, LLC\n */`,
       file: "dist/turbolinks.js",
       format: "umd",
       name: "Turbolinks",
-      sourcemap: true
+      sourcemap: !isProduction
     },
     ...options
   },

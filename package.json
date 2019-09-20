@@ -27,12 +27,13 @@
     "intern": "^4.4.1",
     "leadfoot": "^1.7.6",
     "rollup": "^1.1.2",
+    "rollup-plugin-terser": "^5.1.2",
     "rollup-plugin-typescript2": "^0.19.2",
     "typescript": "^3.3.1"
   },
   "scripts": {
     "clean": "rm -fr dist",
-    "build": "tsc -b && rollup -c",
+    "build": "tsc -b && rollup -c --environment BUILD:production",
     "watch": "rollup -wc",
     "start": "intern serveOnly",
     "test": "NODE_OPTIONS=--inspect intern"
